@@ -106,6 +106,7 @@ class MiscControllerTest {
         assertThat(response.getFlowTemplate()).isEqualTo("tasks:\n  - id: configured\n    type: io.kestra.plugin.core.log.Log\n    message: Configured");
         assertThat(response.getIsAiApiKeyConfigured()).isNotNull();
         assertThat(response.getIsBasicAuthManagedByConfig()).isTrue();
+        assertThat(response.getBasicAuthUser()).isEqualTo(basicAuthConfiguration.getUsername());
         // Nothing was upgraded here, so the UI must not be told to show a migration notice.
         assertThat(response.getVersionUpgrade()).isNull();
     }

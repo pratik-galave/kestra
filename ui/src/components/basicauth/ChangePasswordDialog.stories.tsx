@@ -42,6 +42,21 @@ export const Default: Story = {
     render,
 }
 
+/** When a username is already known, it opens with the username field pre-filled. */
+export const PreFilled: Story = {
+    render: () => ({
+        setup() {
+            const visible = ref(true)
+            return () => (
+                <>
+                    <ChangePasswordDialog username="admin@kestra.io" modelValue={visible.value} onUpdate:modelValue={(value) => visible.value = value} />
+                    <div data-test="visible">{String(visible.value)}</div>
+                </>
+            )
+        },
+    }),
+}
+
 /** A wrong current password must keep the dialog open and surface the server's reason. */
 export const WrongCurrentPassword: Story = {
     render,

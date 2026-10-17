@@ -3,6 +3,7 @@ package io.kestra.webserver.controllers.api;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -160,6 +161,7 @@ public class MiscController {
             .isAiApiKeyConfigured(aiServiceManager.map(AiServiceManager::hasConfiguredProvider).orElse(false))
             .isBasicAuthInitialized(isBasicAuthInitialized())
             .isBasicAuthManagedByConfig(basicAuthService.map(BasicAuthService::isManagedByConfig).orElse(false))
+            .basicAuthUser(basicAuthUser())
             .systemNamespace(systemFlowsConfiguration.namespace())
             .hiddenLabelsPrefixes(hiddenLabelsPrefixes)
             .url(kestraUrl)
@@ -192,6 +194,14 @@ public class MiscController {
 
     private boolean isBasicAuthInitialized() {
         return basicAuthService.map(BasicAuthService::isBasicAuthInitialized).orElse(false);
+    }
+
+    private String basicAuthUser() {
+        return basicAuthService
+            .map(BasicAuthService::credentials)
+            .filter(Objects::nonNull)
+            .map(BasicAuthService.SaltedBasicAuthCredentials::getUsername)
+            .orElse(null);
     }
 
     /**
@@ -381,6 +391,8 @@ public class MiscController {
         Boolean isBasicAuthInitialized;
 
         Boolean isBasicAuthManagedByConfig;
+
+        String basicAuthUser;
 
         Long pluginsHash;
 

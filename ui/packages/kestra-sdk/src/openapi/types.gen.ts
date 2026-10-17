@@ -1555,6 +1555,7 @@ export type MiscControllerConfiguration = {
     isAiApiKeyConfigured?: boolean;
     isBasicAuthInitialized?: boolean;
     isBasicAuthManagedByConfig?: boolean;
+    basicAuthUser?: string;
     pluginsHash?: number;
     isPluginAutoInstallEnabled?: boolean;
     isPluginEndpointsEnabled?: boolean;
